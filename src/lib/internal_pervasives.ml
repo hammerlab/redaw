@@ -28,14 +28,14 @@ module Json = struct
         val to_yojson : t -> Yojson.Safe.json
         val of_yojson : Yojson.Safe.json -> [ `Error of string | `Ok of t ]
       end) : WITH_VERSIONED_SERIALIZATION with type t := T.t = struct
-      type 'a versioned = V0 of 'a [@@deriving yojson]
+      type 'a versioned = Redaw_V0 of 'a [@@deriving yojson]
       let to_json t =
-        versioned_to_yojson T.to_yojson (V0 t)
+        versioned_to_yojson T.to_yojson (Redaw_V0 t)
       let serialize t =
         to_json t |> Yojson.Safe.pretty_to_string ~std:true
       let of_json_exn json : T.t =
         match versioned_of_yojson T.of_yojson json with
-        | `Ok (V0 t) -> t
+        | `Ok (Redaw_V0 t) -> t
         | `Error str ->
           failwith (Printf.sprintf "deserialization error: %s" str)
 
