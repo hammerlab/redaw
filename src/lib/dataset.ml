@@ -1,12 +1,12 @@
 open Internal_pervasives
 
 module V0 = struct
-  type name = string [@@deriving yojson]
+  type name = string [@@deriving yojson,show]
 
   type host =
     | Uri of string
     | Local
-    [@@deriving yojson]
+    [@@deriving yojson,show]
 
   type somatic =
     { normal : data list;
@@ -19,7 +19,7 @@ module V0 = struct
     | Single_end of data list
     | Paired_end of data list * data list
     | Somatic of data list * data list * data list
-    [@@deriving yojson]
+    [@@deriving yojson,show]
 
   type metadata =
     | Url of string
@@ -27,13 +27,13 @@ module V0 = struct
     | Date of float
     | List of metadata list
     | Description of (string * metadata) list
-    [@@deriving yojson]
+    [@@deriving yojson,show]
 
   type t = {
     name: string;
-    content: data;
+    content: data option;
     metadata: metadata option;
-  } [@@deriving yojson]
+  } [@@deriving yojson,show]
 end
 
 open V0
@@ -42,6 +42,8 @@ let pointer_to name = Pointer_to name
 
 let create ~name ?metadata content = {name; metadata; content}
 
+let show = V0.show
+let pp = V0.pp
 (*
 let dna ~normal ~tumors = Dna {normal; tumors}
 let paired_end ~r1 ~r2 = Paired_end (r1, r2)
