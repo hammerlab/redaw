@@ -72,7 +72,7 @@ module Command_line = struct
           $ output_channel_and_format ()
         )
 
-  let cmd_build_form_patterns =
+  let cmd_transform =
     let open Cmdliner in
     sub_command "transform"
       ~doc:"read/write dataset files/streams"
@@ -120,7 +120,7 @@ module Command_line = struct
     let open Cmdliner in
     let cmds = [
       cmd_generate;
-      cmd_build_form_patterns;
+      cmd_transform;
     ] in
     match Term.eval_choice default_cmd cmds with
     | `Ok f ->
