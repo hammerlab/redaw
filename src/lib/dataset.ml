@@ -36,7 +36,7 @@ module V0 = struct
   } [@@deriving yojson,show]
 end
 
-open V0
+include V0
 
 let pointer_to name = Pointer_to name
 
@@ -44,6 +44,9 @@ let create ~name ?metadata content = {name; metadata; content}
 
 let show = V0.show
 let pp = V0.pp
+
+let of_v0 x = x
+let to_v0 x = x
 (*
 let dna ~normal ~tumors = Dna {normal; tumors}
 let paired_end ~r1 ~r2 = Paired_end (r1, r2)
