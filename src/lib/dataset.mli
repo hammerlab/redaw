@@ -13,23 +13,25 @@ module V0 : sig
   type name = string
   type host = Uri of string | Local
   type somatic = {
-    normal : data list;
-    tumor : data list;
-    rna : data list;
+    normal_dna : data list;
+    tumor_dna : data list;
+    normal_rna : data list;
+    tumor_rna : data list;
   }
-  and data =
-      Located of host * data
+  and atom =
+      File of (host * string)
     | Pointer_to of name
-    | File of string
-    | Single_end of data list
-    | Paired_end of data list * data list
+  and data =
+    | Single_end of atom list
+    | Paired_end of atom list * atom list
     | Somatic of somatic
-  type metadata =
+    | Annotated of (metadata * data)
+  and metadata =
       Url of string
     | Comment of string
     | Date of float
     | List of metadata list
-    | Description of (string * metadata) list
+    | Description of (string * metadata)
   type t = {
     name : string;
     content : data option;
@@ -46,8 +48,9 @@ type t
 
 type metadata
 type data
+type atom
 
-val pointer_to : string -> data
+val pointer_to : string -> atom
 
 val create :
   name:string -> ?metadata:metadata -> data option -> t
