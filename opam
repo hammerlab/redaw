@@ -1,0 +1,28 @@
+opam-version: "1.2"
+name: "redaw"
+version: "0.0.0-alpha"
+maintainer: "seb@mondet.org"
+authors: [
+  "Sebastien Mondet <seb@mondet.org>"
+  "Isaac Hodes <isaachodes@gmail.com>"
+]
+homepage: "https://github.com/smondet/redaw"
+bug-reports: "https://github.com/smondet/redaw/issues"
+dev-repo: "https://github.com/smondet/redaw.git"
+license: "Apache-2.0"
+build: [
+  ["omake"]
+]
+install: [
+  ["omake" "install" "BINDIR=%{bin}%"]
+]
+remove: [
+  ["ocamlfind" "remove" "redaw"]
+  ["rm" "-f" "%{bin}%/redaw"]
+]
+depends: [
+  "base-threads"
+  "sosa" "nonstd" "ppx_deriving_yojson" "cmdliner"
+  "omake" {build}
+  "ocamlfind" {build}
+]
