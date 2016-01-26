@@ -18,7 +18,7 @@ module V0 = struct
     | File of string
     | Single_end of data list
     | Paired_end of data list * data list
-    | Somatic of data list * data list * data list
+    | Somatic of somatic
     [@@deriving yojson,show]
 
   type metadata =
